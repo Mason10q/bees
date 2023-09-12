@@ -1,0 +1,11 @@
+
+body{
+    margin: 0px
+}
+
+.repeat {
+    background-image: url(../images/honeycomb.png);
+    background-repeat: repeat-x;
+    width: auto;
+    height: 150px;
+}
