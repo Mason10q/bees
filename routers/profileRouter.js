@@ -7,6 +7,7 @@ profileRouter.get("/", userController.getProfile);
 profileRouter.get("/apirie", userController.getApirie);
 profileRouter.get("/sheduleWork", userController.getAllScheduledWork)
 profileRouter.get("/doneWork", userController.getAllDoneWork);
+profileRouter.get("/notes", userController.getNotes);
 
 
 module.exports = profileRouter;

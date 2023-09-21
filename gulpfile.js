@@ -9,11 +9,12 @@ function include() {
         `${path}createapirie.html`, 
         `${path}main.html`, 
         `${path}noapirieyet.html`, 
-        `${path}apirie.html`, 
+        `${path}apiary.html`, 
         `${path}signin.html`, 
         `${path}signup.html`,
         `${path}profile.html`,
-        `${path}work.html`
+        `${path}work.html`,
+        `${path}notes.html`
     ])
         .pipe(fileinclude({
             prefix: '@@',

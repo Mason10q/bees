@@ -1,4 +1,4 @@
-<table>
+<table border="3px">
     <tr>
         <td>Название</td>
         <td>Гнёзд</td>
@@ -7,13 +7,13 @@
         <td>Возраст матки</td>
     </tr>
 
-    <% apiary.forEach((hive) => { %>
+    <% apiaries.forEach((hive) => { %>
         <tr>
             <td><%=hive.hive_name %></td>
             <td><%=hive.nest_count %></td>
             <td><%=hive.store_count %></td>
             <td><%=hive.nature %></td>
-            <td><%=hive.queen_age %></td>
+            <td><%=hive.queen_age %> год(а)</td>
         </tr>
     <% }) %>
     

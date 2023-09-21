@@ -1,5 +1,5 @@
 exports.beesInfoPage = (req, res) => {
-    res.send(`${__approot}/html/beesinfo.html`);
+    res.sendFile(`${__approot}/html/beesinfo.html`);
 }
 
 exports.mainPage = (req, res) => {

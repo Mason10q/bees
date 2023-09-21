@@ -36,7 +36,7 @@ exports.getApirie = (req, res) => {
                     ON H.id = N.hive_id \
                     JOIN HiveStores as S \
                     ON H.id = S.hive_id \
-                    WHERE A.user_id = 6 \
+                    WHERE A.user_id = ? \
                     GROUP BY A.apiary_name, A.apiary_photo_url, H.hive_name, BN.nature, H.queen_age";
 
     db.connect();
@@ -44,7 +44,7 @@ exports.getApirie = (req, res) => {
     if(matchesId(user_id)) {
         db.query(query, [user_id], (err, rows, fields)=>{
             if(rows != undefined && rows.length > 0) {
-                res.sendFile(`${__approot}/html/apirie.html`)
+                res.render(`${__approot}/html/apiary.html`, {apiaries: rows})
             } else {
                 res.sendFile(`${__approot}/html/noapirieyet.html`);
             }
@@ -79,7 +79,7 @@ exports.getSheduledHiveWork = (req, res) => {
     let hive_id = req.session.hive_id;
     let query = "SELECT description, date \
                     FROM Work \
-                    WHERE isDone = NULL \
+                    WHERE isDone IS NULL \
                     AND hive_id = ?";
 
     db.connect();
@@ -119,7 +119,7 @@ exports.getAllScheduledWork = (req, res) => {
                     FROM Hives as H \
                     JOIN Works as W \
                     ON W.hive_id = H.id \
-                    WHERE isDone = NULL";
+                    WHERE isDone ISS NULL";
 
     db.connect();
 
@@ -211,7 +211,7 @@ exports.getNotes = (req, res) => {
 
     if(matchesId(user_id)){
         db.query(query, [user_id], (err, rows, fields)=>{
-
+            res.render(`${__approot}/html/notes.html`, {notes: rows});
         });
     }
 

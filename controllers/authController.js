@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const crypto = require('node:crypto');
 const dotenv = require('dotenv');
+const alert = require('alert');
 
 function getConfig() {
     return dotenv.config({path: __approot + '/.env'});
@@ -62,12 +63,18 @@ exports.signIn = (req, res) => {
 
     db.query(query, [email], (err, rows, fields) => {
 
+        if(rows === undefined || rows.length === 0){
+            alert("Такая почта не \n зарегестрирована");
+            return;
+        }
+
         isPasswordCorrect(rows[0].password, password, function(isCorrect){
             if(isCorrect){
                 req.session.user_id = rows[0].id;
                 res.redirect("/profile/apirie/");
             } else{
-                res.redirect("/signInPage");
+                alert("Пароль неверный");
+                return;
             }
         });
     });

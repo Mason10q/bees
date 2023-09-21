@@ -1,0 +1,25 @@
+<table>
+    <tr>
+        <td>Мои заметки</td>
+    </tr>
+
+    <% if(notes.length > 0){ %>
+        <tr></tr>
+        <% notes.forEach((note) => { %>
+            <tr>
+                <td class="note">
+                    <%=note.note_text %>
+                </td>
+            </tr>
+        <% }) %>
+    <% } else { %>
+            <tr>
+                <td class="note">
+                    Ваша первая заметка :)
+                </td>
+            </tr>
+    <% } %>
+            
+</table>
+
+<script src="/public/js/noteEditable.js"></script>
