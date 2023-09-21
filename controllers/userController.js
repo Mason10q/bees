@@ -18,32 +18,33 @@ function getDb() {
 
 
 function matchesId(id){
-    return id.matches("[0-9]+");
+    if(id === undefined) { return false; }
+    return /[0-9]+/.test(id.toString());
 }
 
 
 exports.getApirie = (req, res) => {
     let db = getDb();
-    let user_id = req.body.user_id;
-    let query = "SELECT A.name, A.photo_url, H.name, N.frame_amount, S.frame_amount, CH.character, H.queen_age \
-                    FROM Apiries as A \
+    let user_id = req.session.user_id;
+    let query = "SELECT A.apiary_name, A.apiary_photo_url, H.hive_name, COUNT(N.id) as nest_count, COUNT(S.id) as store_count, BN.nature, H.queen_age \
+                    FROM Apiaries as A \
                     JOIN Hives as H \
                     ON H.apiary_id = A.id \
-                    JOIN Characters as CH \
-                    ON CH.id = H.character_id \
+                    JOIN BeeNatures as BN \
+                    ON BN.id = H.bee_nature_id \
                     JOIN HiveNests as N \
                     ON H.id = N.hive_id \
                     JOIN HiveStores as S \
                     ON H.id = S.hive_id \
-                    WHERE A.user_id = ? \
-                    LIMIT 1";
+                    WHERE A.user_id = 6 \
+                    GROUP BY A.apiary_name, A.apiary_photo_url, H.hive_name, BN.nature, H.queen_age";
 
     db.connect();
 
-    if(matchesId(user_id)){
+    if(matchesId(user_id)) {
         db.query(query, [user_id], (err, rows, fields)=>{
-            if(rows.length > 0){
-                res.sendFile(`${__approot}/html/`)
+            if(rows != undefined && rows.length > 0) {
+                res.sendFile(`${__approot}/html/apirie.html`)
             } else {
                 res.sendFile(`${__approot}/html/noapirieyet.html`);
             }
@@ -54,9 +55,9 @@ exports.getApirie = (req, res) => {
 }
 
 
-exports.getHive = (res, req) => {
+exports.getHive = (req, res) => {
     let db = getDb();
-    let apiary_id = req.body.apiary_id;
+    let apiary_id = req.session.apiary_id;
     let query = "SELECT id, name, photo_url, description \
                     FROM Hives \
                     WHERE H.apiary_id=?";
@@ -73,9 +74,9 @@ exports.getHive = (res, req) => {
 }
 
 
-exports.getSheduledHiveWork = (res, req) => {
+exports.getSheduledHiveWork = (req, res) => {
     let db = getDb();
-    let hive_id = req.body.hive_id;
+    let hive_id = req.session.hive_id;
     let query = "SELECT description, date \
                     FROM Work \
                     WHERE isDone = NULL \
@@ -93,9 +94,9 @@ exports.getSheduledHiveWork = (res, req) => {
 }
 
 
-exports.getDoneHiveWork = (res, req) => {
+exports.getDoneHiveWork = (req, res) => {
     let db = getDb();
-    let hive_id = req.body.hive_id;
+    let hive_id = req.session.hive_id;
     let query = "SELECT description, date \
                     FROM Work \
                     WHERE isDone = '' \
@@ -105,23 +106,31 @@ exports.getDoneHiveWork = (res, req) => {
 
     if(matchesId(hive_id)){
         db.query(query, [hive_id], (err, rows, fields)=>{
-
+            
         });
     }
 
     db.end();
 }
 
-exports.getAllScheduledWork = (res, req) => {
+exports.getAllScheduledWork = (req, res) => {
     let db = getDb();
     let query = "SELECT H.name, W.description, W.date \
-                    FROM Hive \
+                    FROM Hives as H \
+                    JOIN Works as W \
+                    ON W.hive_id = H.id \
                     WHERE isDone = NULL";
 
     db.connect();
 
-    db.query(query, (err, rows, fields)=>{
 
+    db.query(query, (err, rows, fields)=>{
+        console.log(rows, rows.length);
+        if(rows.length > 0){
+            res.render(`${__approot}/html/work.html`, {works: rows})
+        } else{
+            res.sendFile(`${__approot}/html/noapirieyet.html`);
+        }
     });
 
     db.end();
@@ -129,27 +138,31 @@ exports.getAllScheduledWork = (res, req) => {
 
 
 
-exports.getAllDoneWork = (res, req) => {
+exports.getAllDoneWork = (req, res) => {
     let db = getDb();
     let query = "SELECT H.name, W.description, W.date \
                     FROM Hives as H\
-                    JOIN Work as W \
+                    JOIN Works as W \
                     ON W.hive_id = H.id \
-                    WHERE isDone = ''";
+                    WHERE W.isDone = ''";
 
     db.connect();
 
     db.query(query, (err, rows, fields)=>{
-
+        if(rows != undefined && rows.length > 0){
+            res.render(`${__approot}/html/work.html`, {works: rows})
+        } else{
+            res.sendFile(`${__approot}/html/noapirieyet.html`);
+        }
     });
 
     db.end();
 }
 
 
-exports.makeWorkDone = (res, req) => {
+exports.makeWorkDone = (req, res) => {
     let db = getDb();
-    let hive_id = req.body.hive_id;
+    let hive_id = req.session.hive_id;
     let query = "ALTER TABLE Work \
                     SET isDone = '' \
                     WHERE hive_id = ?";
@@ -166,9 +179,9 @@ exports.makeWorkDone = (res, req) => {
 }
 
 
-exports.getProfile = (res, req) => {
+exports.getProfile = (req, res) => {
     let db = getDb();
-    let user_id = req.body.user_id;
+    let user_id = req.session.user_id;
     let query = "SELECT username, name, email, location \
                     FROM Users \
                     WHERE id = ?";
@@ -177,7 +190,8 @@ exports.getProfile = (res, req) => {
 
     if(matchesId(user_id)){
         db.query(query, [user_id], (err, rows, fields)=>{
-
+            console.log(rows);
+            res.render(`${__approot}/html/profile.html`, {user: rows[0]})
         });
     }
 
@@ -186,9 +200,9 @@ exports.getProfile = (res, req) => {
 }
 
 
-exports.getNotes = (res, req) => {
+exports.getNotes = (req, res) => {
     let db = getDb();
-    let user_id = req.body.user_id;
+    let user_id = req.session.user_id;
     let query = "SELECT note_text \
                     FROM Notes \
                     WHERE user_id = ?";
@@ -205,9 +219,9 @@ exports.getNotes = (res, req) => {
 }
 
 
-exports.addNote = (res, req) => {
+exports.addNote = (req, res) => {
     let db = getDb();
-    let user_id = req.body.user_id;
+    let user_id = req.session.user_id;
     let query = "SELECT username, name, email, location \
                     FROM Users \
                     where id = ?";

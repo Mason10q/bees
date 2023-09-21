@@ -9,9 +9,7 @@
 
     <body>
         
-        <header>
-            <div class="repeat" method="post" action="/user/signup"></div>
-        </header>
+        @@include("auth_header.html")
 
         <main>
             <form method="post" action="/signin">
@@ -20,6 +18,9 @@
                 <input type="submit" value="Войти"/>
             </form>
 
+            <form method="get" action="/signupPage">
+                <input type="submit" value="Регистрация"/>
+            </form>
         </main>
     </body>
 </html>

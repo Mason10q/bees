@@ -1,12 +1,30 @@
 const fileinclude = require('gulp-file-include');
 const gulp = require('gulp');
 
-function includeMainHeader() {
-    gulp.src(['public/html/beesinfo.html', 'public/html/main.html', 'public/html/signin.html'])
+const path = 'public/html/'
+
+function include() {
+    gulp.src([
+        `${path}beesinfo.html`, 
+        `${path}createapirie.html`, 
+        `${path}main.html`, 
+        `${path}noapirieyet.html`, 
+        `${path}apirie.html`, 
+        `${path}signin.html`, 
+        `${path}signup.html`,
+        `${path}profile.html`,
+        `${path}work.html`
+    ])
         .pipe(fileinclude({
             prefix: '@@',
             basepath: '@file'
         }))
         .pipe(gulp.dest('./html/'));
-    console.log("Main header page included...");
+    console.log("All pages included...");
 }
+
+
+gulp.task('fileinclude', async function() {
+    include();
+    console.log("File including complete!");
+});

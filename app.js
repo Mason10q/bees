@@ -23,6 +23,7 @@ const app = express();
 app.use(session({secret: 'ssshhhhh', saveUninitialized: true, resave: true}));
 app.use(multer({storage:storageConfig}).single("picture"));
 app.use("/public/", express.static(__dirname + '/public/'));
+app.engine('html', require('ejs').renderFile);
 
 app.use("", mainRouter);
 app.use("/profile", profileRouter);

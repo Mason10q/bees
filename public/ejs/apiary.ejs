@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <td>Название</td>
+        <td>Гнёзд</td>
+        <td>Магазинов</td>
+        <td>Характер</td>
+        <td>Возраст матки</td>
+    </tr>
+
+    <% apiary.forEach((hive) => { %>
+        <tr>
+            <td><%=hive.hive_name %></td>
+            <td><%=hive.nest_count %></td>
+            <td><%=hive.store_count %></td>
+            <td><%=hive.nature %></td>
+            <td><%=hive.queen_age %></td>
+        </tr>
+    <% }) %>
+    
+</table>

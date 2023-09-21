@@ -1,0 +1,31 @@
+<table>
+    <tr>
+        <td>Улей</td>
+        <td>Описание</td>
+        <td>Дата</td>
+    </tr>
+
+    <% let hiveNames = Array.from(new Set(works.map(work => work[0]))); 
+        hiveNames.forEach((name) => { %>
+        <tr>
+            <td><%=name %></td>
+
+            <td>
+                <ul>
+                    <% works.filter(work => work[0] == name).map(work => work.description).forEach((description) => { %>
+                        <li><%=description %></li>
+                    <% }) %>
+                </ul>
+            </td>
+
+            <td>
+                <ul>
+                    <% works.filter(work => work[0] == name).map(work => work.date).forEach((date) => { %>
+                        <li><%=date %></li>
+                    <% }) %>
+                </ul>
+            </td>
+
+        </tr>
+    <% }) %>
+</table>

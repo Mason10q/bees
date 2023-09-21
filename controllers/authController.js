@@ -1,8 +1,6 @@
 const mysql = require('mysql');
 const crypto = require('node:crypto');
 const dotenv = require('dotenv');
-const { res } = require('express');
-const { assert } = require('node:console');
 
 function getConfig() {
     return dotenv.config({path: __approot + '/.env'});
@@ -66,7 +64,8 @@ exports.signIn = (req, res) => {
 
         isPasswordCorrect(rows[0].password, password, function(isCorrect){
             if(isCorrect){
-                res.redirect("/profile/apirie", {user_id: rows[0].id});
+                req.session.user_id = rows[0].id;
+                res.redirect("/profile/apirie/");
             } else{
                 res.redirect("/signInPage");
             }
