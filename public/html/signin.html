@@ -3,8 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Регистрация</title>
-        <link rel="stylesheet" type="text/css" href="/public/css/loop.css"> 
+        <title>Вход</title>
     </head>
 
     <body>
@@ -12,15 +11,17 @@
         @@include("auth_header.html")
 
         <main>
-            <form method="post" action="/signin">
-                <input type="email" name="email" placeholder="Адрес электронной почты" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any" required/>
-                <input type="password" name="password" placeholder="Пароль" required/>
-                <input type="submit" value="Войти"/>
-            </form>
+            <div class="signform">
+                <form method="post" action="/signin">
+                    <input type="email" name="email" placeholder="Адрес электронной почты" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any" required/>
+                    <input type="password" name="password" placeholder="Пароль" required/>
+                    <input type="submit" value="Войти"/>
+                </form>
 
-            <form method="get" action="/signupPage">
-                <input type="submit" value="Регистрация"/>
-            </form>
+                <form method="get" action="/signupPage">
+                    <input type="submit" value="Регистрация"/>
+                </form>
+            </div>
         </main>
     </body>
 </html>

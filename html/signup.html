@@ -4,28 +4,33 @@
     <head>
         <meta charset="UTF-8">
         <title>Регистрация</title>
-        <link rel="stylesheet" type="text/css" href="/public/css/loop.css"> 
     </head>
 
     <body>
         
-        <header>
+        <head>
+    <link rel="stylesheet" type="text/css" href="/public/css/auth.css"> 
+</head>
+
+<header>
     <div class="repeat"></div>
 </header>
 
         <main>
-            <p>Регистрация в MyBees</p>
-            <form method="post" action="/signup">
-                <input type="text" name="username" placeholder="*Имя пользователя" pattern="[А-Яа-яA-Za-z0-9]+" title="Только буквы или цифры" required/>
-                <input type="text" id="name" name="name" style="text-transform: capitalize;" placeholder="*Имя" pattern="[А-Яа-я\t]+" title="Только русские буквы" required/>
-                <input type="email" name="email" placeholder="*Адрес электронной почты" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any" required/>
-                <input type="text" name="location" placeholder="Местонахождение (город, область/край)" pattern="[А-Яа-я]+"/>
-                <input type="password" id="password" name="password" placeholder="*Пароль" required/>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="*Повторите пароль" onkeyup="" required/>
-                <input type="submit" id="registrate" value="Зарегестрироваться"/>
-            </form>
-            <p>Поля, обязательные для заполнения</p>
-            <script src="/public/js/checkPasswordCompares.js"></script>
+            <div class="signform">
+                <p>Регистрация в MyBees</p>
+                <form method="post" action="/signup">
+                    <input type="text" name="username" placeholder="*Имя пользователя" pattern="[А-Яа-яA-Za-z0-9]+" title="Только буквы или цифры" required/>
+                    <input type="text" id="name" name="name" style="text-transform: capitalize;" placeholder="*Имя" pattern="[А-Яа-я\t]+" title="Только русские буквы" required/>
+                    <input type="email" name="email" placeholder="*Адрес электронной почты" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any" required/>
+                    <input type="text" name="location" placeholder="Местонахождение (город, область/край)" pattern="[А-Яа-я]+"/>
+                    <input type="password" id="password" name="password" placeholder="*Пароль" required/>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="*Повторите пароль" onkeyup="" required/>
+                    <input type="submit" id="registrate" value="Зарегестрироваться"/>
+                </form>
+                <p>Поля, обязательные для заполнения</p>
+            </div>
+            <script src="/public/js/validatePassword.js"></script>
         </main>
 
     </body>

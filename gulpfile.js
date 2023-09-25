@@ -14,7 +14,8 @@ function include() {
         `${path}signup.html`,
         `${path}profile.html`,
         `${path}work.html`,
-        `${path}notes.html`
+        `${path}notes.html`,
+        `${path}change_password.html`
     ])
         .pipe(fileinclude({
             prefix: '@@',

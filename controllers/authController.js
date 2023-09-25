@@ -44,6 +44,7 @@ exports.signUp = (req, res) => {
         db.query(query, {username: username, name: name, email: email, password: hash, location: location}, (err, rows, fields)=>{
             res.redirect("/signinPage");
         });
+        
         db.end();
     });
 }
@@ -68,7 +69,7 @@ exports.signIn = (req, res) => {
             return;
         }
 
-        isPasswordCorrect(rows[0].password, password, function(isCorrect){
+        isPasswordCorrect(rows[0].password, password, (isCorrect) => {
             if(isCorrect){
                 req.session.user_id = rows[0].id;
                 res.redirect("/profile/apirie/");
@@ -80,4 +81,57 @@ exports.signIn = (req, res) => {
     });
 
     db.end();
+}
+
+
+exports.changePassword = (req, res) => {
+    let db = getDb();
+    const { password, oldPassword } = req.body
+    let user_id = req.session.user_id;
+    db.connect();
+
+    let getQuery = "SELECT password FROM Users \
+                    WHERE id = ?";
+
+    let updateQuery = "UPDATE Users \
+                        SET password = ? \
+                        WHERE id = ?";
+
+    db.query(getQuery, [user_id], (err, rows, fields)=>{
+        isPasswordCorrect(rows[0].password, oldPassword, (isCorrect) => {
+            if(isCorrect){
+                hashPassword(password, (hash) => {            
+                    db.query(updateQuery, [hash, user_id], (err, rows, fields) => {
+                        res.redirect("/signinPage");
+                        alert("Пароль успешно заменен");
+                        db.end();
+                    });
+                });
+                
+            } else{
+                alert("Старый пароль введён неверно");
+                return;
+            }
+        });
+    });
+
+}
+
+
+exports.logOut = (req, res) => {
+    req.session.clear;
+    res.redirect("/");
+}
+
+
+exports.deleteProfile = (req, res) => {
+    let db = getDb();
+    let user_id = req.session.user_id;
+    let query = "DELETE FROM Users WHERE id = ?";
+
+    db.connect();
+
+    db.query(query, [user_id], (err, rows, fields) => {
+        res.redirect("/");
+    });
 }

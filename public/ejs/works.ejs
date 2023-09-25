@@ -1,29 +1,35 @@
-<table>
+<table border="3px">
     <tr>
         <td>Улей</td>
         <td>Описание</td>
         <td>Дата</td>
     </tr>
 
-    <% let hiveNames = Array.from(new Set(works.map(work => work[0]))); 
+    <% let hiveNames = Array.from(new Set(works.map(work => work.hive_name))); 
         hiveNames.forEach((name) => { %>
         <tr>
             <td><%=name %></td>
 
             <td>
-                <ul>
-                    <% works.filter(work => work[0] == name).map(work => work.description).forEach((description) => { %>
-                        <li><%=description %></li>
-                    <% }) %>
-                </ul>
+                <ol>
+                    <% works.filter(work => work.hive_name == name).map(work => work.description).forEach((description) => { 
+                        if(description != null) {%>
+                            <li><%=description %></li>
+                        <% } else { %>
+                            <li>Пока нет работ</li> 
+                    <% }}) %>
+                </ol>
             </td>
 
             <td>
-                <ul>
-                    <% works.filter(work => work[0] == name).map(work => work.date).forEach((date) => { %>
-                        <li><%=date %></li>
-                    <% }) %>
-                </ul>
+                <dl>
+                    <% works.filter(work => work.hive_name == name).map(work => work.date).forEach((date) => { 
+                        if(date != null) {%>
+                            <dt><%=date %></dt>
+                        <% } else { %>
+                            <dt>дд.мм.гг</dt> 
+                    <% }}) %>
+                </dl>
             </td>
 
         </tr>

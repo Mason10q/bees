@@ -2,10 +2,8 @@ const express = require("express");
 var session = require('express-session');
 const multer  = require("multer");
 
-
 const mainRouter = require("./routers/mainRouter.js");
 const profileRouter = require("./routers/profileRouter.js");
-
 
 global.__approot = __dirname;
 

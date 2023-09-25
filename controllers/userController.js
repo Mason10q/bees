@@ -1,7 +1,6 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
 
-
 function getConfig() {
     return dotenv.config({path: __approot + '/.env'});
 }
@@ -26,7 +25,7 @@ function matchesId(id){
 exports.getApirie = (req, res) => {
     let db = getDb();
     let user_id = req.session.user_id;
-    let query = "SELECT A.apiary_name, A.apiary_photo_url, H.hive_name, COUNT(N.id) as nest_count, COUNT(S.id) as store_count, BN.nature, H.queen_age \
+    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.hive_name, COUNT(N.id) as nest_count, COUNT(S.id) as store_count, BN.nature, H.queen_age \
                     FROM Apiaries as A \
                     JOIN Hives as H \
                     ON H.apiary_id = A.id \
@@ -44,7 +43,8 @@ exports.getApirie = (req, res) => {
     if(matchesId(user_id)) {
         db.query(query, [user_id], (err, rows, fields)=>{
             if(rows != undefined && rows.length > 0) {
-                res.render(`${__approot}/html/apiary.html`, {apiaries: rows})
+                req.session.apiary_id = rows[0].id
+                res.render(`${__approot}/html/apiary.html`, {apiary: rows})
             } else {
                 res.sendFile(`${__approot}/html/noapirieyet.html`);
             }
@@ -115,21 +115,25 @@ exports.getDoneHiveWork = (req, res) => {
 
 exports.getAllScheduledWork = (req, res) => {
     let db = getDb();
-    let query = "SELECT H.name, W.description, W.date \
-                    FROM Hives as H \
-                    JOIN Works as W \
-                    ON W.hive_id = H.id \
-                    WHERE isDone ISS NULL";
+    let apiary_id = req.session.apiary_id;
+        let query = "SELECT H.hive_name, W.description, W.date \
+                        FROM Hives as H\
+                        LEFT OUTER JOIN Works as W \
+                        ON W.hive_id = H.id \
+                        WHERE H.apiary_id = ? \
+                        AND (W.isDone = false OR W.isDone IS NULL)";
 
     db.connect();
 
-
-    db.query(query, (err, rows, fields)=>{
-        console.log(rows, rows.length);
-        if(rows.length > 0){
-            res.render(`${__approot}/html/work.html`, {works: rows})
-        } else{
+    db.query(query, [apiary_id], (err, rows, fields)=>{
+        console.log(apiary_id, rows);
+        if(apiary_id === undefined){
             res.sendFile(`${__approot}/html/noapirieyet.html`);
+            return;
+        }
+
+        if(rows != undefined && rows.length > 0){
+            res.render(`${__approot}/html/work.html`, {works: rows})
         }
     });
 
@@ -140,19 +144,25 @@ exports.getAllScheduledWork = (req, res) => {
 
 exports.getAllDoneWork = (req, res) => {
     let db = getDb();
-    let query = "SELECT H.name, W.description, W.date \
-                    FROM Hives as H\
-                    JOIN Works as W \
-                    ON W.hive_id = H.id \
-                    WHERE W.isDone = ''";
+    let apiary_id = req.session.apiary_id;
+        let query = "SELECT H.hive_name, W.description, W.date \
+                        FROM Hives as H\
+                        LEFT OUTER JOIN Works as W \
+                        ON W.hive_id = H.id \
+                        WHERE H.apiary_id = ? \
+                        AND (W.isDone = true OR W.isDone IS NULL)";
 
     db.connect();
 
-    db.query(query, (err, rows, fields)=>{
+    db.query(query, [apiary_id], (err, rows, fields)=>{
+        console.log(apiary_id, rows);
+        if(apiary_id === undefined){
+            res.sendFile(`${__approot}/html/noapirieyet.html`);
+            return;
+        }
+
         if(rows != undefined && rows.length > 0){
             res.render(`${__approot}/html/work.html`, {works: rows})
-        } else{
-            res.sendFile(`${__approot}/html/noapirieyet.html`);
         }
     });
 
@@ -219,22 +229,7 @@ exports.getNotes = (req, res) => {
 }
 
 
-exports.addNote = (req, res) => {
-    let db = getDb();
-    let user_id = req.session.user_id;
-    let query = "SELECT username, name, email, location \
-                    FROM Users \
-                    where id = ?";
-        
-    db.connect();
-
-    if(matchesId(user_id)){
-        db.query(query, [user_id], (err, rows, fields)=>{
-
-        });
-    }
-
-    db.end();
+exports.getChangePasswordPage = (req, res) => {
+    res.sendFile(`${__approot}/html/change_password.html`);
 }
-
 

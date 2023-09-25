@@ -3,13 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <title>Р</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
     </head>
 
     <body>
         @@include("profile_header.html")
+        @@include("profile_dialogs.html")
 
         <p>Личные данные</p>
 
         <%- include('../public/ejs/userData.ejs'); %>
+
+        <a href="/profile/changePasswordPage">Изменить пароль</a>
+        <button onclick="window.exitDialog.showModal()">Выйти</button>
+        <button onclick="window.deleteDialog.showModal()">Удалить аккаунт</button>
     </body>
 </html>

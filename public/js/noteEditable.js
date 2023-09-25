@@ -1,3 +1,5 @@
+console.log(notes);
+
 function makeEditable(e) {
   var cell = e.target;
   if (cell.dataset.editing !== 'true') {
@@ -22,14 +24,8 @@ function makeNonEditable(e) {
   }
 }
 
-const buttons = document.querySelectorAll('.note');
+const notes = document.querySelectorAll('.note');
 
-buttons.forEach((currentTd) => {
-  currentTd.addEventListener('mousedown', makeEditable)
-});
-
-window.addEventListener('mousedown', () => {
-  buttons.forEach((currentTd) => {
-      makeNonEditable(currentTd);
-  });
+notes.forEach((note) => {
+  note.addEventListener('mousedown', makeEditable);
 });

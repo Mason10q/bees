@@ -1,0 +1,21 @@
+
+body{
+    margin: 0px
+}
+
+.repeat {
+    background-image: url(../images/honeycomb.png);
+    background-repeat: repeat-x;
+    width: auto;
+    height: 150px;
+}
+
+.signform {
+    width: 310px; 
+    height: 334px; 
+    margin: 0 auto;
+    text-align: center;
+    background: #F6921E; 
+    border-radius: 50px; 
+    border: 4px #FFDE4F solid
+}
