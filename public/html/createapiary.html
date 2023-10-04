@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Р</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+    </head>
+
+
+    <body>
+        @@include("profile_header.html")
+        
+        <select id="hive_amount">
+            <%- include('../public/ejs/numberDropdown.ejs'); %>
+        </select>
+        
+        <input type="text" id="apiary_name" placeholder="Новая пасека">
+
+        <img id="apiary_image">        
+            <input id="image_input" type="file" accept="image/*">
+        </img>
+
+        <table id="hive_table">
+            @@include("hive_create_item.html")
+        </table>
+
+        <form id="apiary_form" method="get" action="/profile/apiary">
+            <input id="save_btn" type="submit" value="Сохранить">
+        </form>
+
+        <script type="module" src="/public/js/createApiary.js"></script>
+    </body>
+</html>

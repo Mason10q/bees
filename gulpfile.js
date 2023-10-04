@@ -6,7 +6,6 @@ const path = 'public/html/'
 function include() {
     gulp.src([
         `${path}beesinfo.html`, 
-        `${path}createapirie.html`, 
         `${path}main.html`, 
         `${path}noapirieyet.html`, 
         `${path}apiary.html`, 
@@ -15,7 +14,8 @@ function include() {
         `${path}profile.html`,
         `${path}work.html`,
         `${path}notes.html`,
-        `${path}change_password.html`
+        `${path}change_password.html`,
+        `${path}createapiary.html`
     ])
         .pipe(fileinclude({
             prefix: '@@',

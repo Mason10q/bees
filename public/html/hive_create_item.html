@@ -1,0 +1,34 @@
+<thead>
+    <tr>
+        <td>Название</td>
+        <td>Гнёзд</td>
+        <td>Магазинов</td>
+        <td>Характер</td>
+        <td>Возраст матки</td>
+    </tr>
+</thead>
+<tbody id="hive_table_body">
+    <tr>
+        <td>
+            <input class="data" name="hive_name" placeholder='Улей' required/>
+        </td>
+        <td>
+            <select class="data" name="nest_amount">
+                <%- include('../public/ejs/numberDropdown.ejs'); %>
+            </select>
+        </td>
+        <td>
+            <select class="data" name="store_amount">
+                <%- include('../public/ejs/numberDropdown.ejs'); %>
+            </select>
+        </td>
+        <td>
+            <input class="data" name="bee_nature" placeholder='Характер' required/>
+        </td>
+        <td>
+            <select class="data" name="queen_age">
+                <%- include('../public/ejs/yearDropdown.ejs'); %>
+            </select>
+        </td>
+    </tr>
+</tbody>

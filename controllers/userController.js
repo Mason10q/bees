@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const dotenv = require('dotenv');
 
 function getConfig() {
-    return dotenv.config({path: __approot + '/.env'});
+    return dotenv.config({ path: __approot + '/.env' });
 }
 
 function getDb() {
@@ -16,8 +16,8 @@ function getDb() {
 }
 
 
-function matchesId(id){
-    if(id === undefined) { return false; }
+function matchesId(id) {
+    if (id === undefined) { return false; }
     return /[0-9]+/.test(id.toString());
 }
 
@@ -25,26 +25,25 @@ function matchesId(id){
 exports.getApirie = (req, res) => {
     let db = getDb();
     let user_id = req.session.user_id;
-    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.hive_name, COUNT(N.id) as nest_count, COUNT(S.id) as store_count, BN.nature, H.queen_age \
+    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.hive_name, COUNT(N.id) as nest_count, COUNT(S.id) as store_count, H.bee_nature, H.queen_age \
                     FROM Apiaries as A \
                     JOIN Hives as H \
                     ON H.apiary_id = A.id \
-                    JOIN BeeNatures as BN \
-                    ON BN.id = H.bee_nature_id \
                     JOIN HiveNests as N \
                     ON H.id = N.hive_id \
                     JOIN HiveStores as S \
                     ON H.id = S.hive_id \
                     WHERE A.user_id = ? \
-                    GROUP BY A.apiary_name, A.apiary_photo_url, H.hive_name, BN.nature, H.queen_age";
+                    GROUP BY A.apiary_name, A.apiary_photo_url, H.hive_name, H.bee_nature, H.queen_age";
 
     db.connect();
+    console.log("get");
 
-    if(matchesId(user_id)) {
-        db.query(query, [user_id], (err, rows, fields)=>{
-            if(rows != undefined && rows.length > 0) {
-                req.session.apiary_id = rows[0].id
-                res.render(`${__approot}/html/apiary.html`, {apiary: rows})
+    if (matchesId(user_id)) {
+        db.query(query, [user_id], (err, rows, fields) => {
+            if (rows != undefined && rows.length > 0) {
+                req.session.apiary_id = rows[0].id;
+                res.render(`${__approot}/html/apiary.html`, { apiary: rows });
             } else {
                 res.sendFile(`${__approot}/html/noapirieyet.html`);
             }
@@ -63,10 +62,10 @@ exports.getHive = (req, res) => {
                     WHERE H.apiary_id=?";
 
     db.connect();
-    
-    if(matchesId(apiary_id)){
-        db.query(query, [apiary_id], (err, rows, fields)=>{
-            
+
+    if (matchesId(apiary_id)) {
+        db.query(query, [apiary_id], (err, rows, fields) => {
+
         });
     }
 
@@ -84,8 +83,8 @@ exports.getSheduledHiveWork = (req, res) => {
 
     db.connect();
 
-    if(matchesId(hive_id)){
-        db.query(query, (err, rows, fields)=>{
+    if (matchesId(hive_id)) {
+        db.query(query, (err, rows, fields) => {
 
         });
     }
@@ -104,9 +103,9 @@ exports.getDoneHiveWork = (req, res) => {
 
     db.connect();
 
-    if(matchesId(hive_id)){
-        db.query(query, [hive_id], (err, rows, fields)=>{
-            
+    if (matchesId(hive_id)) {
+        db.query(query, [hive_id], (err, rows, fields) => {
+
         });
     }
 
@@ -116,25 +115,22 @@ exports.getDoneHiveWork = (req, res) => {
 exports.getAllScheduledWork = (req, res) => {
     let db = getDb();
     let apiary_id = req.session.apiary_id;
-        let query = "SELECT H.hive_name, W.description, W.date \
-                        FROM Hives as H\
-                        LEFT OUTER JOIN Works as W \
-                        ON W.hive_id = H.id \
-                        WHERE H.apiary_id = ? \
-                        AND (W.isDone = false OR W.isDone IS NULL)";
+    let query = "SELECT H.hive_name, W.description, W.date \
+                    FROM Hives as H\
+                    LEFT OUTER JOIN Works as W \
+                    ON W.hive_id = H.id \
+                    WHERE H.apiary_id = 4 \
+                    AND (W.isDone = false OR W.isDone IS NULL)";
 
     db.connect();
 
-    db.query(query, [apiary_id], (err, rows, fields)=>{
-        console.log(apiary_id, rows);
-        if(apiary_id === undefined){
+    db.query(query, [apiary_id], (err, rows, fields) => {
+        if (apiary_id === undefined) {
             res.sendFile(`${__approot}/html/noapirieyet.html`);
             return;
         }
 
-        if(rows != undefined && rows.length > 0){
-            res.render(`${__approot}/html/work.html`, {works: rows})
-        }
+        res.render(`${__approot}/html/work.html`, { works: rows })
     });
 
     db.end();
@@ -145,25 +141,22 @@ exports.getAllScheduledWork = (req, res) => {
 exports.getAllDoneWork = (req, res) => {
     let db = getDb();
     let apiary_id = req.session.apiary_id;
-        let query = "SELECT H.hive_name, W.description, W.date \
-                        FROM Hives as H\
-                        LEFT OUTER JOIN Works as W \
-                        ON W.hive_id = H.id \
-                        WHERE H.apiary_id = ? \
-                        AND (W.isDone = true OR W.isDone IS NULL)";
+    let query = "SELECT H.hive_name, W.description, W.date \
+                    FROM Hives as H\
+                    LEFT OUTER JOIN Works as W \
+                    ON W.hive_id = H.id \
+                    WHERE H.apiary_id = 4 \
+                    AND (W.isDone = true OR W.isDone IS NULL)";
 
     db.connect();
 
-    db.query(query, [apiary_id], (err, rows, fields)=>{
-        console.log(apiary_id, rows);
-        if(apiary_id === undefined){
+    db.query(query, [apiary_id], (err, rows, fields) => {
+        if (apiary_id === undefined) {
             res.sendFile(`${__approot}/html/noapirieyet.html`);
             return;
         }
 
-        if(rows != undefined && rows.length > 0){
-            res.render(`${__approot}/html/work.html`, {works: rows})
-        }
+        res.render(`${__approot}/html/work.html`, { works: rows })
     });
 
     db.end();
@@ -179,8 +172,8 @@ exports.makeWorkDone = (req, res) => {
 
     db.connect();
 
-    if(matchesId(hive_id)){
-        db.query(query, [hive_id], (err, rows, fields)=>{
+    if (matchesId(hive_id)) {
+        db.query(query, [hive_id], (err, rows, fields) => {
 
         });
     }
@@ -195,13 +188,12 @@ exports.getProfile = (req, res) => {
     let query = "SELECT username, name, email, location \
                     FROM Users \
                     WHERE id = ?";
-        
+
     db.connect();
 
-    if(matchesId(user_id)){
-        db.query(query, [user_id], (err, rows, fields)=>{
-            console.log(rows);
-            res.render(`${__approot}/html/profile.html`, {user: rows[0]})
+    if (matchesId(user_id)) {
+        db.query(query, [user_id], (err, rows, fields) => {
+            res.render(`${__approot}/html/profile.html`, { user: rows[0] })
         });
     }
 
@@ -216,12 +208,12 @@ exports.getNotes = (req, res) => {
     let query = "SELECT note_text \
                     FROM Notes \
                     WHERE user_id = ?";
-        
+
     db.connect();
 
-    if(matchesId(user_id)){
-        db.query(query, [user_id], (err, rows, fields)=>{
-            res.render(`${__approot}/html/notes.html`, {notes: rows});
+    if (matchesId(user_id)) {
+        db.query(query, [user_id], (err, rows, fields) => {
+            res.render(`${__approot}/html/notes.html`, { notes: rows });
         });
     }
 
@@ -233,3 +225,67 @@ exports.getChangePasswordPage = (req, res) => {
     res.sendFile(`${__approot}/html/change_password.html`);
 }
 
+
+exports.getCreateApiaryPage = (req, res) => {
+    res.render(`${__approot}/html/createapiary.html`);
+}
+
+
+exports.createApiary = (req, res) => {
+    let b = req.body;
+    console.log("insert");
+    console.log(b, req.file);
+    const db = getDb();
+
+    let apiaryQuery = "INSERT INTO Apiaries SET?";
+    let hiveQuery = "INSERT INTO Hives (hive_name, bee_nature, queen_age, apiary_id) VALUES ";
+
+    for (hive of b.hives) {
+        hiveQuery += `("${hive.hive_name}", "${hive.bee_nature}", ${hive.queen_age[0]}, ${req.session.user_id})`;
+
+        if (hive != b.hives[b.hives.length - 1]) {
+            hiveQuery += ',';
+        }
+    }
+
+
+    db.connect();
+
+    db.query(apiaryQuery, { id: req.session.user_id, apiary_name: b.apiary_name, user_id: req.session.user_id }, (err, rows, fields) => {
+        req.session.apiary_id = req.session.user_id;
+
+        db.query(hiveQuery, (err, rows, fields) => {
+            db.end();
+        });
+    });
+}
+
+
+exports.deleteApiary = (req, res) => {
+    const db = getDb();
+    db.connect();
+
+    let id = req.session.apiary_id;
+    let query = "DELETE FROM Apiaries WHERE id = ?"
+
+    db.query(query, [id], (err, rows, fields) => {
+        res.redirect('back');
+    });
+
+    db.end()
+}
+
+
+exports.getHive = (req, res) => {
+    const db = getDb();
+
+    let query = ""
+
+    db.connect();
+
+    db.query(query, (err, rows, fields) => {
+        
+    });
+
+    db.end();
+}

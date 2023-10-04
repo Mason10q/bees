@@ -72,7 +72,7 @@ exports.signIn = (req, res) => {
         isPasswordCorrect(rows[0].password, password, (isCorrect) => {
             if(isCorrect){
                 req.session.user_id = rows[0].id;
-                res.redirect("/profile/apirie/");
+                res.redirect("/profile/apiary/");
             } else{
                 alert("Пароль неверный");
                 return;

@@ -1,3 +1,5 @@
+<p><%=apiary[0].apiary_name %></p>
+
 <table border="3px">
     <tr>
         <td>Название</td>
@@ -9,10 +11,10 @@
 
     <% apiary.forEach((hive) => { %>
         <tr>
-            <td><%=hive.hive_name %></td>
+            <td> <a href=""> <%=hive.hive_name %> </a> </td>
             <td><%=hive.nest_count %></td>
             <td><%=hive.store_count %></td>
-            <td><%=hive.nature %></td>
+            <td><%=hive.bee_nature %></td>
             <td><%=hive.queen_age %> год(а)</td>
         </tr>
     <% }) %>

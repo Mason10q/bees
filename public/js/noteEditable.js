@@ -1,5 +1,3 @@
-console.log(notes);
-
 function makeEditable(e) {
   var cell = e.target;
   if (cell.dataset.editing !== 'true') {

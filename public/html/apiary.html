@@ -10,5 +10,21 @@
         @@include("profile_header.html")
 
         <%- include('../public/ejs/apiary.ejs'); %>
+
+        <dialog id="deleteApiaryDialog">
+            <p>Вы уверены, что хотите удалить аккаунт?</p>
+            
+            <form method="dialog">
+              <button type="submit">нет</button>
+            </form>
+        
+            <form method="get" action="/profile/apiary/delete">
+                <button type="submit">да</button>
+            </form>
+        
+        </dialog>
+
+        <button onclick="window.deleteApiaryDialog.showModal()">Удалить</button>
+        
     </body>
 </html>
