@@ -119,7 +119,7 @@ exports.changePassword = (req, res) => {
 
 
 exports.logOut = (req, res) => {
-    req.session.clear;
+    req.session.destroy();
     res.redirect("/");
 }
 
@@ -132,6 +132,7 @@ exports.deleteProfile = (req, res) => {
     db.connect();
 
     db.query(query, [user_id], (err, rows, fields) => {
+        req.session.destroy();
         res.redirect("/");
     });
 }

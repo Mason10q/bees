@@ -1,0 +1,27 @@
+
+<p><%=hive_name%></p>
+
+<table>
+    <thead>
+        <tr>
+            <td>Описание работ:</td>
+            <td>Дата проведения:</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                <% works.map(work => work.description).forEach((description) => {%>
+                    <li><%=description%></li>
+                <% }) %>
+            </td>
+            <td>
+                <% works.map(work => work.date).forEach((date) => {%>
+                    <li><%=date%></li>
+                <% }) %>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MyBees</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+    </head>
+
+    <body>
+        <header>
+    <div class="box">
+        <div class="rectangle">
+            <a href="/">MyBees</a>
+            <a href="/profile/apiary">Моя пасека</a>
+
+
+            <div class="dropdown">
+                <p>Дневник пчеловода</p>
+                <div class="dropdown-options">
+                  <a href="/profile/work/scheduled">Планируемые работы</a>
+                  <a href="/profile/work/done">Проведённые работы</a>
+                </div>
+            </div>
+
+            <a href="">Дневник медосбора</a>
+            <a href="/profile/notes">Заметки</a>
+            <a href="/profile/">Профиль</a>
+            <img src="/public/images/ic_bee.svg">
+        </div>
+    </div>
+</header>
+
+
+        <%- include('../public/ejs/hive_work.ejs'); %>
+
+    </body>
+</html>

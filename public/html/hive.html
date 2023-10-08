@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MyBees</title>
+        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+    </head>
+
+    <body>
+        @@include("profile_header.html")
+
+        <input id="image_input" type="file" accept="image/*">
+
+        <%- include('../public/ejs/hive.ejs'); %>
+
+        <button id="scheduled_work" type="button">Планируемые работы</button>
+        <button id="done_work" type="button">Проведённые работы</button>
+
+        <button id="save_btn">Сохранить</button>
+
+        <script src="/public/js/hive.js"></script>
+    </body>
+</html>

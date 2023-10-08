@@ -1,5 +1,7 @@
 <p><%=apiary[0].apiary_name %></p>
 
+<img src="<%=apiary[0].apiary_photo_url%>"/>
+
 <table border="3px">
     <tr>
         <td>Название</td>
@@ -11,9 +13,9 @@
 
     <% apiary.forEach((hive) => { %>
         <tr>
-            <td> <a href=""> <%=hive.hive_name %> </a> </td>
-            <td><%=hive.nest_count %></td>
-            <td><%=hive.store_count %></td>
+            <td name="hive_name"> <%=hive.hive_name %> </td>
+            <td><%=hive.nest_amount %></td>
+            <td><%=hive.store_amount %></td>
             <td><%=hive.bee_nature %></td>
             <td><%=hive.queen_age %> год(а)</td>
         </tr>

@@ -17,8 +17,8 @@
             <div class="dropdown">
                 <p>Дневник пчеловода</p>
                 <div class="dropdown-options">
-                  <a href="/profile/scheduledWork">Планируемые работы</a>
-                  <a href="/profile/doneWork">Проведённые работы</a>
+                  <a href="/profile/work/scheduled">Планируемые работы</a>
+                  <a href="/profile/work/done">Проведённые работы</a>
                 </div>
             </div>
 
@@ -32,6 +32,10 @@
 
 
         <%- include('../public/ejs/notes.ejs'); %>
+
+        <button id="add_note_btn">add</button>
+
+        <script src="/public/js/noteEditable.js"></script>
 
     </body>
 </html>

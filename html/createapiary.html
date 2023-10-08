@@ -18,8 +18,8 @@
             <div class="dropdown">
                 <p>Дневник пчеловода</p>
                 <div class="dropdown-options">
-                  <a href="/profile/scheduledWork">Планируемые работы</a>
-                  <a href="/profile/doneWork">Проведённые работы</a>
+                  <a href="/profile/work/scheduled">Планируемые работы</a>
+                  <a href="/profile/work/done">Проведённые работы</a>
                 </div>
             </div>
 
@@ -79,10 +79,9 @@
 </tbody>
         </table>
 
-        <form id="apiary_form" method="get" action="/profile/apiary">
-            <input id="save_btn" type="submit" value="Сохранить">
-        </form>
+        <button id="save_btn">Сохранить</button>
 
         <script type="module" src="/public/js/createApiary.js"></script>
+        <script type="module" src="/public/js/addImage.js"></script>
     </body>
 </html>

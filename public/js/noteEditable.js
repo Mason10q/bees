@@ -22,8 +22,18 @@ function makeNonEditable(e) {
   }
 }
 
-const notes = document.querySelectorAll('.note');
+const noteTable = document.getElementById("note_table");
+const _notes = document.querySelectorAll('.note');
+const addButton = document.getElementById('add_note_btn');
 
-notes.forEach((note) => {
+_notes.forEach((note) => {
   note.addEventListener('mousedown', makeEditable);
 });
+
+addButton.onclick = (event) => {
+  let row = noteTable.insertRow(-1);
+  let c1 = row.insertCell(0);
+  c1.classList.add("note");
+  c1.innerText = "Заметка";
+  row.addEventListener('mousedown', makeEditable);
+};  

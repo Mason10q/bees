@@ -11,5 +11,6 @@ mainRouter.get("/signinPage", mainController.signInPage);
 mainRouter.get("/beesinfo", mainController.beesInfoPage);
 mainRouter.post("/signup", urlEncodedParser, authController.signUp);
 mainRouter.post("/signin", urlEncodedParser, authController.signIn);
+mainRouter.get("/auth", mainController.checkAuth);
 
 module.exports = mainRouter;
