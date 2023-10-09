@@ -13,7 +13,7 @@
 
     <% apiary.forEach((hive) => { %>
         <tr>
-            <td name="hive_name"> <%=hive.hive_name %> </td>
+            <td onclick="window.location.assign(`/profile/apiary/hive?hive_id=<%= hive.hive_id %>`)"> <%=hive.hive_name %> </td>
             <td><%=hive.nest_amount %></td>
             <td><%=hive.store_amount %></td>
             <td><%=hive.bee_nature %></td>

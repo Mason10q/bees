@@ -3,12 +3,12 @@
         <td>Мои заметки</td>
     </tr>
 
-    <% if(notes.length > 0){ 
-        console.log(notes);%>
+    <% if(notes.length > 0){ %>
         <% notes.forEach((note) => { %>
             <tr>
-                <td class="note">
-                    <%=note.note_text %>
+                <td id="<%= note.id%>" >
+                    <p class="note"><%=note.note_text %></p>
+                    <button name="del_btn">del</button>
                 </td>
             </tr>
         <% }) %>

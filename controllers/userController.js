@@ -34,7 +34,7 @@ function pathFromFileName(filename) {
 exports.getApirie = (req, res) => {
     let db = getDb();
     let user_id = req.session.user_id;
-    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.hive_name, H.nest_amount, H.store_amount, H.bee_nature, H.queen_age \
+    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.id as hive_id, H.hive_name, H.nest_amount, H.store_amount, H.bee_nature, H.queen_age \
                     FROM Apiaries as A \
                     JOIN Hives as H \
                     ON H.apiary_id = A.id \
@@ -62,34 +62,74 @@ exports.getApirie = (req, res) => {
 
 exports.getSheduledHiveWork = (req, res) => {
     let db = getDb();
-    let hive_name = req.query.hive_name;
-    let query = "SELECT description, date \
+    let query = "SELECT id, description, date \
                     FROM Works \
                     WHERE isDone = false \
-                    AND hive_id IN (SELECT id FROM Hives where hive_name = ?)";
+                    AND hive_id = ?";
 
     db.connect();
 
-    db.query(query, [hive_name], (err, rows, fields) => {
-        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: hive_name });
+    db.query(query, [req.session.hive_id], (err, rows, fields) => {
+        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: req.query.hive_name });
     });
 
     db.end();
 }
 
 
-exports.getDoneHiveWork = (req, res) => {
+exports.insertWork = (req, res) => {
     let db = getDb();
-    let hive_name = req.query.hive_name;
-    let query = "SELECT description, date \
-                    FROM Works \
-                    WHERE isDone = true \
-                    AND hive_id IN (SELECT id FROM Hives where hive_name = ?)";
+    let query = "INSERT INTO Works (description, date, hive_id) \
+                    VALUES (?, ?, ?)";
 
     db.connect();
 
-    db.query(query, [hive_name], (err, rows, fields) => {
-        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: hive_name });
+    db.query(query, [req.body.description, req.body.date, req.session.hive_id], (err, rows, fields) => {
+        res.send();
+    });
+
+    db.end();
+}
+
+
+exports.updateWork = (req, res) => {
+    let db = getDb();
+    let query = "UPDATE Works SET description = ?, date = ? WHERE id = ?";
+
+    db.connect();
+
+    db.query(query, [req.body.description, req.body.date, req.body.id], (err, rows, fields) => {
+        res.send();
+    });
+
+    db.end();
+}
+
+
+exports.deleteWork = (req, res) => {
+    let db = getDb();
+    let query = "DELETE FROM Works WHERE id = ?";
+
+    db.connect();
+
+    db.query(query, [req.body.id], (err, rows, fields) => {
+        res.send();
+    });
+
+    db.end();
+}
+
+exports.getDoneHiveWork = (req, res) => {
+    let db = getDb();
+    let query = "SELECT id, description, date \
+                    FROM Works \
+                    WHERE isDone = true \
+                    AND hive_id = ?";
+
+    db.connect();
+
+    db.query(query, [req.session.hive_id], (err, rows, fields) => {
+        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: req.query.hive_name });
     });
 
     db.end();
@@ -148,18 +188,16 @@ exports.getAllDoneWork = (req, res) => {
 
 exports.makeWorkDone = (req, res) => {
     let db = getDb();
-    let hive_id = req.session.hive_id;
-    let query = "ALTER TABLE Work \
-                    SET isDone = '' \
-                    WHERE hive_id = ?";
+    let query = "UPDATE Works \
+                    SET isDone = true \
+                    WHERE id IN (?)";
 
     db.connect();
 
-    if (matchesId(hive_id)) {
-        db.query(query, [hive_id], (err, rows, fields) => {
-
-        });
-    }
+    db.query(query, [req.body.work_ids], (err, rows, fields) => {
+        console.log(err);
+        res.send();
+    });
 
     db.end();
 }
@@ -188,7 +226,7 @@ exports.getProfile = (req, res) => {
 exports.getNotes = (req, res) => {
     let db = getDb();
     let user_id = req.session.user_id;
-    let query = "SELECT note_text \
+    let query = "SELECT id, note_text \
                     FROM Notes \
                     WHERE user_id = ?";
 
@@ -196,6 +234,7 @@ exports.getNotes = (req, res) => {
 
     if (matchesId(user_id)) {
         db.query(query, [user_id], (err, rows, fields) => {
+            console.log(rows);
             res.render(`${__approot}/html/notes.html`, { notes: rows });
         });
     }
@@ -272,7 +311,7 @@ exports.deleteApiary = (req, res) => {
     });
 
     db.query(query, [id], (err, rows, fields) => {
-        res.redirect('back');
+        res.redirect('/profile/apiary');
     });
 
     db.end()
@@ -284,11 +323,12 @@ exports.getHive = (req, res) => {
 
     let query = "SELECT * FROM Hives \
                     WHERE apiary_id = ? \
-                    AND hive_name = ?;"
+                    AND id = ?"
 
     db.connect();
 
-    db.query(query, [req.session.apiary_id, req.query.hive_name], (err, rows, fields) => {
+    db.query(query, [req.session.apiary_id, req.query.hive_id], (err, rows, fields) => {
+        req.session.hive_id = req.query.hive_id;
         rows.map((image) => { image, image.hive_photo_url = pathFromFileName(image.hive_photo_url); });
         res.render(`${__approot}/html/hive.html`, { hive: rows[0] })
     });
@@ -331,22 +371,22 @@ exports.updateHiveAvatar = (req, res) => {
     let query = "UPDATE Hives \
                     SET hive_photo_url = ?, \
                     description = ? \
-                    WHERE hive_name = ?";
+                    WHERE id = ?";
 
     let unlinkQuery = "SELECT hive_photo_url \
                         FROM Hives \
-                        WHERE hive_name = ?";
+                        WHERE id = ?";
 
     db.connect();
 
-    db.query(unlinkQuery, [req.body.hive_name], (err, rows, fields) => {
-        if (rows[0].hive_photo_url) {
-            unlinkAsync(__approot + pathFromFileName(rows[0].hive_photo_url));
-        }
-    });
-
     if (req.file != undefined) {
-        db.query(query, [req.file.filename, req.body.description, req.body.hive_name], (err, rows, fields) => {
+        db.query(unlinkQuery, [req.session.hive_id], (err, rows, fields) => {
+            if (rows[0].hive_photo_url != undefined) {
+                unlinkAsync(__approot + pathFromFileName(rows[0].hive_photo_url));
+            }
+        });
+
+        db.query(query, [req.file.filename, req.body.description, req.session.hive_id], (err, rows, fields) => {
             res.send();
         });
     } else {
@@ -360,4 +400,51 @@ exports.updateHiveAvatar = (req, res) => {
     }
 
     db.end();
+}
+
+
+exports.updateNote = (req, res) => {
+    const db = getDb();
+    const query = "UPDATE Notes \
+                    SET note_text = ? \
+                    WHERE user_id = ? \
+                    AND id = ?"
+
+    db.connect()
+
+    db.query(query, [req.body.text, req.session.user_id, req.body.id], (err, rows, fields) => {
+        console.log("update", req.body.text, req.session.user_id, req.body.id);
+        res.send();
+    });
+
+    db.end()
+}
+
+
+exports.deleteNote = (req, res) => {
+    const db = getDb();
+    const query = "DELETE FROM Notes \
+                    WHERE user_id = ? \
+                    AND id = ?";
+
+    db.query(query, [req.session.user_id, req.body.id], (err, rows, fields) => {
+        console.log("delete");
+        res.send();
+    });
+
+    db.end()
+}
+
+
+exports.insertNote = (req, res) => {
+    const db = getDb();
+
+    const query = "INSERT INTO Notes (note_text, user_id) VALUES (?, ?)";
+
+    db.query(query, [req.body.text, req.session.user_id], (err, rows, fields) => {
+        console.log("insert" + req.body.text);
+        res.send();
+    });
+
+    db.end()
 }

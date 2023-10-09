@@ -3,6 +3,7 @@ const apiaryName = document.getElementById("apiary_name");
 const apiaryImage = document.getElementById("hive_image");
 let imageInput = document.querySelector("input[type=file]");
 let saveBtn = document.getElementById("save_btn");
+let img = document.getElementById("hive_image");
 let imageChanged = false;
 
 document.getElementById("scheduled_work").onclick = (event) => {
@@ -24,7 +25,6 @@ imageInput.onchange = (event) => {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            let img = document.getElementById("apiary_image");
             img.src = e.target.result;
         };
 
@@ -43,7 +43,6 @@ saveBtn.onclick = (event) => {
     }
 
     formData.append("description", description.value);
-    formData.append("hive_name", hiveName.innerText);
 
     fetch(`/profile/apiary/hive/avatar/update`, {
         method: "PUT",
