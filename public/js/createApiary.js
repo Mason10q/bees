@@ -1,23 +1,20 @@
 let hiveAmount = document.getElementById("hive_amount");
-let hiveTableBody = document.querySelector("table tbody");
+let hiveTableBody = document.getElementById("hive_table_body");
 let saveBtn = document.getElementById("save_btn");
 let apiaryName = document.getElementById("apiary_name");
 let apiaryImage = document.getElementById("apiary_image");
 let imageInput = document.querySelector("input[type=file]");
 
 let tr = hiveTableBody.querySelectorAll("tr")[0].cloneNode(true);
-let len = 1;
 let imageChanged = false;
 
 hiveAmount.onchange = (event) => {
-    while (len > hiveAmount.value) {
+    while (hiveTableBody.querySelectorAll("tr").length > hiveAmount.value) {
         hiveTableBody.removeChild(hiveTableBody.lastChild);
-        len--;
     }
 
-    while (len < hiveAmount.value) {
+    while (hiveTableBody.querySelectorAll("tr").length < hiveAmount.value) {
         hiveTableBody.appendChild(tr.cloneNode(true));
-        len++;
     }
 };
 

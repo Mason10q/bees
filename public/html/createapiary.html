@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Р</title>
-        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+        @@include('header_links.html')        
     </head>
 
 
@@ -11,22 +11,54 @@
         @@include("profile_header.html")
         
         <select id="hive_amount">
-            <%- include('../public/ejs/numberDropdown.ejs'); %>
+            <%- include("../public/ejs/numberDropdown.ejs") %>              
         </select>
         
-        <input type="text" id="apiary_name" placeholder="Новая пасека">
-
+        <input type="text" id="apiary_name" placeholder="Новая пасека" >
+        
         <img id="apiary_image">        
             <input id="image_input" type="file" accept="image/*">
         </img>
-
-        <table id="hive_table">
-            @@include("hive_create_item.html")
-        </table>
+        
+        <table id="hive_table">        
+            <thead>
+                <tr>
+                    <td>Название</td>
+                    <td>Гнёзд</td>
+                    <td>Магазинов</td>
+                    <td>Характер</td>
+                    <td>Возраст матки</td>
+                </tr>
+            </thead>
+            <tbody id="hive_table_body">
+                <tr>
+                    <td>
+                        <input class="data" name="hive_name" placeholder='Улей'equired/>
+                    </td>
+                    <td>
+                        <select class="data" name="nest_amount">
+                            <%- include("../public/ejs/numberDropdown.ejs") %>              
+                        </select>
+                    </td>
+                    <td>
+                        <select class="data" name="store_amount">
+                            <%- include("../public/ejs/numberDropdown.ejs") %>              
+                        </select>
+                    </td>
+                    <td>
+                        <input class="data" name="bee_nature" placeholder='Характер' required/>
+                    </td>
+                    <td>
+                        <select class="data" name="queen_age">
+                            <%- include("../public/ejs/yearDropdown.ejs") %>              
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
 
         <button id="save_btn">Сохранить</button>
 
         <script type="module" src="/public/js/createApiary.js"></script>
-        <script type="module" src="/public/js/addImage.js"></script>
     </body>
 </html>

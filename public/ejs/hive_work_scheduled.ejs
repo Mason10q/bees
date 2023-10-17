@@ -1,0 +1,35 @@
+
+<p class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-text-default u-align-center u-text-2"> Улей - <%=hive_name%></p>
+
+<div class="u-expanded-width u-table u-table-responsive u-table-1">
+
+    <table id="work_table" class="u-table-entity">
+        <colgroup>
+            <col width="31.3%">
+            <col width="8.7%">
+          </colgroup>
+        <thead class="u-align-center u-table-header u-white u-table-header-1">
+            <tr style="height: 43px;">
+                <td>Описание работ:</td>
+                <td>Дата проведения:</td>
+            </tr>
+        </thead>
+
+        <tbody class="u-align-left u-table-body u-white u-table-body-1">
+            <% works.forEach((work, index) => { %>
+                <tr id="<%= work.id%>">
+                    <td>
+                        <p style="display: inline;"><%= index + 1 %>. </p>
+                        <p class="description" style="display: inline;"> <%= work.description %> </p>
+                    </td>
+                    <td>
+                        <p class="date" placeholder="дд.мм.гг" style="display: inline;"> <%= work.date %> </p>
+                        <button name="del_btn" style="display: inline;">del</button>
+                        <input name="checkbox" type="checkbox" style="display: inline;"/>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>

@@ -3,18 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <title>Р</title>
-        <link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+        <link rel="shortcut icon" href="/public/icons/favicon.png" type="image/png">
+<link rel="stylesheet" href="/public/css/headers.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
+<link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+<link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+        
     </head>
 
 
     <body>
         <header class="u-clearfix u-custom-color-14 u-header">
-    <div class="u-clearfix u-group-elements-1">
+    <div onclick="window.location.replace('/')" class="u-clearfix u-group-elements-1">
         <a class="u-image u-image-1" data-image-width="150" data-image-height="34">
             <img src="/public/icons/MyBEES2.svg" class="u-logo-image-1">
         </a>
-        <p class="u-align-center u-custom-font u-font-montserrat u-text-custom-color-17 u-text-default u-text-1"> MyBEES
-        </p>
+        <p class="u-align-center u-custom-font u-font-montserrat u-text-custom-color-17 u-text-default u-text-1"> MyBEES </p>
     </div>
     <a class="u-image u-image-2" data-image-width="80" data-image-height="80">
         <img src="/public/icons/noto-v1_honeybee1.svg">
@@ -55,55 +59,54 @@
 </header>
         
         <select id="hive_amount">
-            <%- include('../public/ejs/numberDropdown.ejs'); %>
+            <%- include("../public/ejs/numberDropdown.ejs") %>              
         </select>
         
-        <input type="text" id="apiary_name" placeholder="Новая пасека">
-
+        <input type="text" id="apiary_name" placeholder="Новая пасека" >
+        
         <img id="apiary_image">        
             <input id="image_input" type="file" accept="image/*">
         </img>
-
-        <table id="hive_table">
+        
+        <table id="hive_table">        
             <thead>
-    <tr>
-        <td>Название</td>
-        <td>Гнёзд</td>
-        <td>Магазинов</td>
-        <td>Характер</td>
-        <td>Возраст матки</td>
-    </tr>
-</thead>
-<tbody id="hive_table_body">
-    <tr>
-        <td>
-            <input class="data" name="hive_name" placeholder='Улей' required/>
-        </td>
-        <td>
-            <select class="data" name="nest_amount">
-                <%- include('../public/ejs/numberDropdown.ejs'); %>
-            </select>
-        </td>
-        <td>
-            <select class="data" name="store_amount">
-                <%- include('../public/ejs/numberDropdown.ejs'); %>
-            </select>
-        </td>
-        <td>
-            <input class="data" name="bee_nature" placeholder='Характер' required/>
-        </td>
-        <td>
-            <select class="data" name="queen_age">
-                <%- include('../public/ejs/yearDropdown.ejs'); %>
-            </select>
-        </td>
-    </tr>
-</tbody>
-        </table>
+                <tr>
+                    <td>Название</td>
+                    <td>Гнёзд</td>
+                    <td>Магазинов</td>
+                    <td>Характер</td>
+                    <td>Возраст матки</td>
+                </tr>
+            </thead>
+            <tbody id="hive_table_body">
+                <tr>
+                    <td>
+                        <input class="data" name="hive_name" placeholder='Улей'equired/>
+                    </td>
+                    <td>
+                        <select class="data" name="nest_amount">
+                            <%- include("../public/ejs/numberDropdown.ejs") %>              
+                        </select>
+                    </td>
+                    <td>
+                        <select class="data" name="store_amount">
+                            <%- include("../public/ejs/numberDropdown.ejs") %>              
+                        </select>
+                    </td>
+                    <td>
+                        <input class="data" name="bee_nature" placeholder='Характер' required/>
+                    </td>
+                    <td>
+                        <select class="data" name="queen_age">
+                            <%- include("../public/ejs/yearDropdown.ejs") %>              
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
 
         <button id="save_btn">Сохранить</button>
 
         <script type="module" src="/public/js/createApiary.js"></script>
-        <script type="module" src="/public/js/addImage.js"></script>
     </body>
 </html>

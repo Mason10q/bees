@@ -17,7 +17,9 @@ function include() {
         `${path}change_password.html`,
         `${path}createapiary.html`,
         `${path}hive.html`,
-        `${path}hive_work.html`
+        `${path}hive_work_done.html`,
+        `${path}hive_work_scheduled.html`,
+        `${path}redact_apiary.html`
     ])
         .pipe(fileinclude({
             prefix: '@@',

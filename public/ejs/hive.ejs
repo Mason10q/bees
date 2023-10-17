@@ -1,7 +1,14 @@
 
 <p id="hive_name"><%=hive.hive_name%></p>
 
-<img id="hive_image" src="<%=hive.hive_photo_url%>"/>
+<%  let src = "/public/icons/Rectangle.svg"
+    let avatar = hive.hive_photo_url
+    if (avatar != "/public/images/null") {
+        src = avatar
+    }
+%>
+
+<img id="hive_image" class="u-image u-image-default u-image-1" src="<%=src%>" alt="" data-image-width="260" data-image-height="140">
 
 <p>Количество гнёзд: <%=hive.nest_amount%></p>
 <p>Количество магазинов: <%=hive.store_amount%></p>

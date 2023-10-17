@@ -60,7 +60,7 @@ exports.getApirie = (req, res) => {
 
 
 
-exports.getSheduledHiveWork = (req, res) => {
+exports.getScheduledHiveWork = (req, res) => {
     let db = getDb();
     let query = "SELECT id, description, date \
                     FROM Works \
@@ -70,7 +70,7 @@ exports.getSheduledHiveWork = (req, res) => {
     db.connect();
 
     db.query(query, [req.session.hive_id], (err, rows, fields) => {
-        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: req.query.hive_name });
+        res.render(`${__approot}/html/hive_work_scheduled.html`, { works: rows, hive_name: req.query.hive_name });
     });
 
     db.end();
@@ -129,7 +129,7 @@ exports.getDoneHiveWork = (req, res) => {
     db.connect();
 
     db.query(query, [req.session.hive_id], (err, rows, fields) => {
-        res.render(`${__approot}/html/hive_work.html`, { works: rows, hive_name: req.query.hive_name });
+        res.render(`${__approot}/html/hive_work_done.html`, { works: rows, hive_name: req.query.hive_name });
     });
 
     db.end();
@@ -142,8 +142,9 @@ exports.getAllScheduledWork = (req, res) => {
                     FROM Hives as H\
                     LEFT OUTER JOIN Works as W \
                     ON W.hive_id = H.id \
-                    WHERE H.apiary_id = 4 \
-                    AND (W.isDone = false OR W.isDone IS NULL)";
+                    WHERE H.apiary_id = ? \
+                    AND (W.isDone = false OR W.isDone IS NULL) \
+                    ORDER BY W.date";
 
     db.connect();
 
@@ -168,8 +169,9 @@ exports.getAllDoneWork = (req, res) => {
                     FROM Hives as H\
                     LEFT OUTER JOIN Works as W \
                     ON W.hive_id = H.id \
-                    WHERE H.apiary_id = 4 \
-                    AND (W.isDone = true OR W.isDone IS NULL)";
+                    WHERE H.apiary_id = ? \
+                    AND (W.isDone = true OR W.isDone IS NULL) \
+                    ORDER BY W.date";
 
     db.connect();
 
@@ -250,6 +252,33 @@ exports.getChangePasswordPage = (req, res) => {
 
 exports.getCreateApiaryPage = (req, res) => {
     res.render(`${__approot}/html/createapiary.html`);
+}
+
+exports.getRedactApiaryPage = (req, res) => {
+    let db = getDb();
+    let query = "SELECT A.id, A.apiary_name, A.apiary_photo_url, H.id as hive_id, H.hive_name, H.nest_amount, H.store_amount, H.bee_nature, H.queen_age \
+                    FROM Apiaries as A \
+                    JOIN Hives as H \
+                    ON H.apiary_id = A.id \
+                    WHERE A.user_id = ?";
+
+    db.connect();
+
+    db.query(query, [req.session.user_id], (err, rows, fields) => {
+        rows.map((image) => { image, image.apiary_photo_url = pathFromFileName(image.apiary_photo_url); });
+        res.render(`${__approot}/html/redact_apiary.html`, { apiary: rows });
+    });
+    
+
+    db.end();
+}
+
+
+exports.redactApiary = (req, res) => {
+    b = req.body;
+    const db = getDb();
+
+    let apiaryQuery = "UPDATE Apiaries SET apiary_name = ?, apiary_photo_url = ?"
 }
 
 

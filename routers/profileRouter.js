@@ -27,7 +27,7 @@ profileRouter.get("/apiary/delete", userController.deleteApiary);
 
 profileRouter.get("/apiary/hive", userController.getHive);
 
-profileRouter.get("/apiary/hive/work/scheduled", userController.getSheduledHiveWork);
+profileRouter.get("/apiary/hive/work/scheduled", userController.getScheduledHiveWork);
 profileRouter.get("/apiary/hive/work/done", userController.getDoneHiveWork);
 profileRouter.post("/apiary/hive/work/insert", userController.insertWork);
 profileRouter.put("/apiary/hive/work/update", userController.updateWork);
@@ -36,5 +36,7 @@ profileRouter.put("/apiary/hive/work/makeDone", userController.makeWorkDone);
 
 profileRouter.put("/apiary/avatar/update", userController.updateApiaryAvatar);
 profileRouter.put("/apiary/hive/avatar/update", userController.updateHiveAvatar);
+
+profileRouter.get("/apiary/redact", userController.getRedactApiaryPage);
 
 module.exports = profileRouter;

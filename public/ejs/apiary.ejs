@@ -1,24 +1,40 @@
-<p><%=apiary[0].apiary_name %></p>
 
-<img src="<%=apiary[0].apiary_photo_url%>"/>
+<%  let src = "/public/icons/Rectangle.svg"
+    let avatar = apiary[0].apiary_photo_url
+    if (avatar != "/public/images/null") {
+        src = avatar
+    }
+%>
 
-<table border="3px">
-    <tr>
-        <td>Название</td>
-        <td>Гнёзд</td>
-        <td>Магазинов</td>
-        <td>Характер</td>
-        <td>Возраст матки</td>
-    </tr>
+<img class="u-image u-image-default u-image-1" src="<%=src%>" alt="" data-image-width="260" data-image-height="140">
+<p class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-text-default u-text-1"> <%=apiary[0].apiary_name %>&nbsp;</p>
 
-    <% apiary.forEach((hive) => { %>
-        <tr>
-            <td onclick="window.location.assign(`/profile/apiary/hive?hive_id=<%= hive.hive_id %>`)"> <%=hive.hive_name %> </td>
-            <td><%=hive.nest_amount %></td>
-            <td><%=hive.store_amount %></td>
-            <td><%=hive.bee_nature %></td>
-            <td><%=hive.queen_age %> год(а)</td>
-        </tr>
-    <% }) %>
-    
-</table>
+<div class="u-expanded-width u-table u-table-responsive u-table-1">
+    <table class="u-table-entity">
+        <thead class="u-align-center u-table-header u-white u-table-header-1">
+            <tr style="height: 43px;">
+            <th class="u-border-2 u-border-custom-color-15 u-table-cell">Название</th>
+            <th class="u-border-2 u-border-custom-color-15 u-table-cell"> Гнёзд</th>
+            <th class="u-border-2 u-border-custom-color-15 u-table-cell"> Магазинов</th>
+            <th class="u-border-2 u-border-custom-color-15 u-table-cell"> Характер</th>
+            <th class="u-border-2 u-border-custom-color-15 u-table-cell">Возраст матки</th>
+            </tr>
+        </thead>
+
+        <tbody class="u-align-center u-table-body u-white u-table-body-1">
+            <% apiary.forEach((hive) => { %>
+                <tr style="height: 54px;">
+                    <td 
+                        onclick="window.location.assign(`/profile/apiary/hive?hive_id=<%= hive.hive_id %>`)"
+                        class="u-border-2 u-border-custom-color-15 u-border-no-bottom u-border-no-top u-table-cell"> <%=hive.hive_name %> </td>
+                        
+                    <td class="u-border-2 u-border-custom-color-15 u-border-no-bottom u-border-no-top u-table-cell"><%=hive.nest_amount %></td>
+                    <td class="u-border-2 u-border-custom-color-15 u-border-no-bottom u-border-no-top u-table-cell"><%=hive.store_amount %></td>
+                    <td class="u-border-2 u-border-custom-color-15 u-border-no-bottom u-border-no-top u-table-cell"><%=hive.bee_nature %></td>
+                    <td class="u-border-2 u-border-custom-color-15 u-border-no-bottom u-border-no-top u-table-cell"><%=hive.queen_age %> год(а)</td>
+                </tr>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>

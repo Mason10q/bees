@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="ru">
+
+<head>
+    <title>Планируемые работы</title>
+    <link rel="stylesheet" href="/public/css/hive_work.css" media="screen">
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    @@include("header_links.html")
+</head>
+
+<body class="u-body u-xl-mode" data-lang="ru">
+
+    @@include("profile_header.html")
+
+    <section class="u-clearfix u-section-1">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-border-5 u-border-custom-color-15 u-custom-color-18 u-group u-group-1">
+                <div class="u-container-layout u-container-layout-1">
+                    <p
+                        class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-text-default u-align-center u-text-1">
+                        Проведённые работы</p>
+
+                    <%- include('../public/ejs/hive_work_done.ejs'); %>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
