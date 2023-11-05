@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Р</title>
-        <link rel="shortcut icon" href="/public/icons/favicon.png" type="image/png">
+<html style="font-size: 16px;" lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="/public/css/profile.css" media="screen">
+    <link rel="shortcut icon" href="/public/icons/favicon.png" type="image/png">
 <link rel="stylesheet" href="/public/css/headers.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
 <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
 <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
-    </head>
+</head>
 
-    <body>
-        <header class="u-clearfix u-custom-color-14 u-header">
+<body class="u-body u-overlap u-xl-mode">
+    <header class="u-clearfix u-custom-color-14 u-header">
     <div onclick="window.location.replace('/')" class="u-clearfix u-group-elements-1">
         <a class="u-image u-image-1" data-image-width="150" data-image-height="34">
             <img src="/public/icons/MyBEES2.svg" class="u-logo-image-1">
@@ -56,7 +57,7 @@
         </div>
     </nav>
 </header>
-        <dialog id="exitDialog">
+    <dialog id="exitDialog">
     <p>Вы уверены, что хотите выйти из аккаунта?</p>
     
     <form method="dialog">
@@ -84,12 +85,27 @@
 </dialog>
 
 
-        <p>Личные данные</p>
+    <section class="u-clearfix u-section-1">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-border-5 u-border-custom-color-15 u-container-style u-custom-color-18 u-group u-group-1">
+                <div class="u-container-layout u-valign-top u-container-layout-1">
+                    <h2
+                        class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-align-center u-text-default u-text-1">
+                        Личные данные</h2>
 
-        <%- include('../public/ejs/userData.ejs'); %>
+                    <%- include('../public/ejs/userData.ejs'); %>
 
-        <a href="/profile/changePasswordPage">Изменить пароль</a>
-        <button onclick="window.exitDialog.showModal()">Выйти</button>
-        <button onclick="window.deleteDialog.showModal()">Удалить аккаунт</button>
-    </body>
+                    <a href="/profile/changePasswordPage"
+                        class="u-border-none u-btn u-button-style u-custom-color-14 u-radius-30 u-text-custom-color-17 u-btn-2">
+                        Изменить пароль</a>
+                    <a class="u-border-none u-btn u-button-style u-palette-5-dark-1 u-radius-30 u-text-custom-color-17 u-btn-3"
+                        onclick="window.exitDialog.showModal()">Выйти</a>
+                    <a class="u-border-none u-btn u-button-style u-palette-5-dark-1 u-radius-30 u-text-custom-color-17 u-btn-4"
+                        onclick="window.deleteDialog.showModal()">Удалить аккаунт</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
 </html>

@@ -10,6 +10,7 @@ let tagedWorks = []
 
 function makeEditable(e) {
   var cell = e.target;
+  console.log(cell);
   if (cell.dataset.editing !== 'true') {
     cell.dataset.editing = true;
     var text = cell.innerText;
@@ -37,17 +38,17 @@ function makeNonEditable(e) {
 
   let body = { "id": row.id, "description": description.innerText, "date": date.innerText }
 
-  console.log(body);
   updateWork(body);
 }
 
-descriptions.forEach((descriprion) => {
-  descriprion.addEventListener('mousedown', makeEditable);
+descriptions.forEach((d) => {
+  d.addEventListener('mousedown', makeEditable);
 });
 
-dates.forEach((date) => {
-  date.addEventListener('mousedown', makeEditable);
+dates.forEach((d) => {
+  d.addEventListener('mousedown', makeEditable);
 });
+
 
 checkboxes.forEach((box) => {
   box.onclick = (event) => {

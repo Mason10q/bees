@@ -1,5 +1,26 @@
-
-<p> <%=user.username %> </p>
-<p> <%=user.name %> </p>
-<p> <%=user.email %> </p>
-<p> <%=user.location %> </p>
+<div class="u-form u-form-1">
+    <form class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" method="post"
+        action="/profile/update">
+        <div class="u-form-group">
+            <input type="text" name="username" pattern="[А-Яа-яA-Za-z0-9]+" title="Только буквы или цифры"
+                value="<%=user.username %>" placeholder="Username" class="u-input u-border-3 u-border-custom-color-17"
+                required />
+        </div>
+        <div class="u-form-group">
+            <input type="text" name="name" pattern="[А-Яа-я\t]+" title="Только русские буквы" value="<%=user.name %>"
+                placeholder="Имя" class="u-input u-border-3 u-border-custom-color-17" required />
+        </div>
+        <div class="u-form-group">
+            <input value="<%=user.email %>" class="u-input u-border-3 u-border-custom-color-17" readonly/>
+        </div>
+        <div class="u-form-group">
+            <input type="text" name="location" placeholder="Местонахождение (город, область/край)" pattern="[А-Яа-я]+"
+                value="<%=user.location %>" placeholder="Локация" class="u-input u-border-3 u-border-custom-color-17" />
+        </div>
+        <div class="u-align-left u-form-group u-form-submit">
+            <button
+                class="u-border-none u-btn u-btn-submit u-button-style u-custom-color-14 u-text-custom-color-17 u-btn-1"
+                type="submit"> Сохранить изменения</button>
+        </div>
+    </form>
+</div>

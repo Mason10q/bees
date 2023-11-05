@@ -1,37 +1,48 @@
-<table border="3px">
-    <tr>
-        <td>Улей</td>
-        <td>Описание</td>
-        <td>Дата</td>
-    </tr>
+<table class="u-table-entity">
 
-    <% let hiveNames = Array.from(new Set(works.map(work => work.hive_name))); 
-        hiveNames.forEach((name) => { %>
-        <tr>
-            <td><%=name %></td>
+    <colgroup>
+        <col width="20%">
+        <col width="65%">
+        <col width="15%">
+      </colgroup>
 
-            <td>
-                <ol>
-                    <% works.filter(work => work.hive_name == name).map(work => work.description).forEach((description) => { 
-                        if(description != null) {%>
-                            <li><%=description %></li>
-                        <% } else { %>
-                            <li>Пока нет работ</li> 
-                    <% }}) %>
-                </ol>
-            </td>
-
-            <td>
-                <dl>
-                    <% works.filter(work => work.hive_name == name).map(work => work.date).forEach((date) => { 
-                        if(date != null) {%>
-                            <dt><%=date %></dt>
-                        <% } else { %>
-                            <dt>дд.мм.гг</dt> 
-                    <% }}) %>
-                </dl>
-            </td>
-
+    <thead class="u-align-center u-custom-font u-font-montserrat u-table-header u-text-custom-color-17 u-white u-table-header-1">
+        <tr style="height: 46px;">
+          <th class="u-border-3 u-border-custom-color-15 u-table-cell"> Улей</th>
+          <th class="u-border-3 u-border-custom-color-15 u-table-cell"> Описание:</th>
+          <th class="u-border-3 u-border-custom-color-15 u-table-cell"> Дата:</th>
         </tr>
-    <% }) %>
+      </thead>
+
+    <tbody class="u-custom-font u-font-montserrat u-table-body u-text-custom-color-17 u-white u-table-body-1">
+        <% let hiveNames = Array.from(new Set(works.map(work => work.hive_name))); 
+            hiveNames.forEach((name) => { %>
+            <tr style="height: 65px;">
+                <td class="u-align-center u-border-3 u-border-custom-color-15 u-first-column u-table-cell"><%=name %></td>
+
+                <td class="u-border-3 u-border-custom-color-15 u-table-cell">
+                    <ol>
+                        <% works.filter(work => work.hive_name == name).map(work => work.description).forEach((description) => { 
+                            if(description != null) {%>
+                                <li><%=description %></li>
+                            <% } else { %>
+                                <li>Пока нет работ</li> 
+                        <% }}) %>
+                    </ol>
+                </td>
+
+                <td class="u-border-3 u-border-custom-color-15 u-table-cell">
+                    <dl>
+                        <% works.filter(work => work.hive_name == name).map(work => work.date).forEach((date) => { 
+                            if(date != null) {%>
+                                <dt><%=date %></dt>
+                            <% } else { %>
+                                <dt>дд.мм.гг</dt> 
+                        <% }}) %>
+                    </dl>
+                </td>
+
+            </tr>
+        <% }) %>
+    </tbody>
 </table>

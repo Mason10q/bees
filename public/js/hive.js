@@ -44,7 +44,7 @@ saveBtn.onclick = (event) => {
 
     formData.append("description", description.value);
 
-    fetch(`/profile/apiary/hive/avatar/update`, {
+    fetch(`/profile/apiary/hive/update`, {
         method: "PUT",
         body: formData
     })

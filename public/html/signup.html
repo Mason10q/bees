@@ -1,34 +1,67 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html style="font-size: 16px;" lang="ru">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Регистрация</title>
-        <link rel="shortcut icon" href="/public/icons/favicon.png" type="image/png">
-        <link rel="stylesheet" type="text/css" href="/public/css/auth.css"> 
-    </head>
+<head>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/public/css/signup.css" media="screen">
+    @@include('header_links.html')
+</head>
 
-    <body>
-        
-        @@include("auth_header.html")
+<body class="u-body u-overlap u-xl-mode">
 
-        <main>
-            <div class="signform">
-                <p>Регистрация в MyBees</p>
-                <form method="post" action="/signup">
-                    <input type="text" name="username" placeholder="*Имя пользователя" pattern="[А-Яа-яA-Za-z0-9]+" title="Только буквы или цифры" required/>
-                    <input type="text" id="name" name="name" style="text-transform: capitalize;" placeholder="*Имя" pattern="[А-Яа-я\t]+" title="Только русские буквы" required/>
-                    <input type="email" name="email" placeholder="*Адрес электронной почты" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any" required/>
-                    <input type="text" name="location" placeholder="Местонахождение (город, область/край)" pattern="[А-Яа-я]+"/>
-                    <input type="password" id="password" name="password" placeholder="*Пароль" required/>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="*Повторите пароль" onkeyup="" required/>
-                    <input type="submit" id="registrate" value="Зарегестрироваться"/>
-                </form>
-                <p>Поля, обязательные для заполнения</p>
+    @@include('auth_header.html')
+
+    <section class="u-clearfix u-section-1">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-border-5 u-border-custom-color-16 u-container-style u-custom-color-15 u-group u-group-1">
+                <div class="u-container-layout u-container-layout-1">
+                    <h2
+                        class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-align-center u-text-default u-text-1">
+                        Регистрация в MyBEES</h2>
+                    <div class="u-form u-form-1">
+                        <form class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" method="post" action="/signup">
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="text" name="username"
+                                    placeholder="*Имя пользователя" pattern="[А-Яа-яA-Za-z0-9]+"
+                                    title="Только буквы или цифры" required />
+                            </div>
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="text" id="name"
+                                    name="name" style="text-transform: capitalize;" placeholder="*Имя"
+                                    pattern="[А-Яа-я\t]+" title="Только русские буквы" required />
+                            </div>
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="email" name="email"
+                                    placeholder="*Адрес электронной почты"
+                                    pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="email@service.any"
+                                    required />
+                            </div>
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="text" name="location"
+                                    placeholder="Местонахождение (город, область/край)" pattern="[А-Яа-я]+" />
+                            </div>
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="password" id="password"
+                                    name="password" placeholder="*Пароль" required />
+                            </div>
+                            <div class="u-form-group">
+                                <input class="u-border-3 u-border-custom-color-17 u-input" type="password"
+                                    id="confirm_password" name="confirm_password" placeholder="*Повторите пароль"
+                                    onkeyup="" required />
+                            </div>
+                            <div class="u-align-center u-form-group u-form-submit">
+                                <input
+                                    class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-14 u-custom-font u-font-montserrat u-text-custom-color-17 u-btn-1"
+                                    type="submit" id="registrate" value="Зарегестрироваться" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <script src="/public/js/validatePassword.js"></script>
-        </main>
+        </div>
+    </section>
 
-    </body>
+    <script src="/public/js/validatePassword.js"></script>
+</body>
 
 </html>

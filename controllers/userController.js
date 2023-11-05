@@ -31,6 +31,27 @@ function pathFromFileName(filename) {
 }
 
 
+exports.updateProfile = (req, res) => {
+    let db = getDb();
+    let query = "UPDATE Users \
+                    SET username = ?, name = ?, location = ?\
+                    WHERE id = ?";
+    const { username, name, location } = req.body
+
+    console.log(req.body);
+
+    db.connect();
+
+    db.query(query, [username, name, location, req.session.user_id], (err, rows, fields) => {
+        console.log(err);
+        res.redirect('back');        
+    });
+
+    db.end()
+}
+
+
+
 exports.getApirie = (req, res) => {
     let db = getDb();
     let user_id = req.session.user_id;
@@ -394,8 +415,10 @@ exports.updateApiaryAvatar = (req, res) => {
 }
 
 
-exports.updateHiveAvatar = (req, res) => {
+exports.updateHive = (req, res) => {
     const db = getDb();
+
+    console.log(req.body)
 
     let query = "UPDATE Hives \
                     SET hive_photo_url = ?, \
@@ -421,9 +444,10 @@ exports.updateHiveAvatar = (req, res) => {
     } else {
         query = "UPDATE Hives \
                     SET description = ? \
-                    WHERE hive_name = ?";
+                    WHERE id = ?";
 
-        db.query(query, [req.body.description, req.body.hive_name], (err, rows, fields) => {
+        db.query(query, [req.body.description, req.session.hive_id], (err, rows, fields) => {
+            console.log(err);
             res.send();
         });
     }

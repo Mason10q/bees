@@ -405,3 +405,15 @@ td{
   border-style: solid;
   height: 54px;
 }
+
+.u-input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  background-clip: padding-box;
+  border-width: 0;
+  border-radius: 3px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  height: auto;
+  display: inline;
+}

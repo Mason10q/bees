@@ -21,68 +21,36 @@
         </tr>
     </thead>
     <tbody id="hive_table_body">
-        <% if(apiary.length > 0){
-                apiary.forEach((hive) => { %>
-                    <tr>
-                        <td>
-                            <input class="data" name="hive_name" placeholder='Улей' value="<%= hive.hive_name %>" required/>
-                        </td>
-                        <td>
-                            <select class="data" name="nest_amount">
-                                <% for (let i = 1; i < 101; i++) { %>
-                                    <option value="<%= hive.nest_amount %>"><%=i %></option>
-                                <% } %>                
-                            </select>
-                        </td>
-                        <td>
-                            <select class="data" name="store_amount">
-                                <% for (let i = 1; i < 101; i++) { %>
-                                    <option value="<%= hive.nest_amount %>"><%=i %></option>
-                                <% } %>                
-                            </select>
-                        </td>
-                        <td>
-                            <input class="data" name="bee_nature" placeholder='Характер' value="<%= hive.bee_nature %>" required/>
-                        </td>
-                        <td>
-                            <select class="data" name="queen_age">
-                                <% for (let i = 0; i < 6; i++) { %>
-                                    <option value="<%= hive.queen_age %>"><%=i %> год(а)</option>
-                                <% } %>
-                            </select>
-                        </td>
-                    </tr>
-        <%      })
-            } else { %>
-                <tr>
-                    <td>
-                        <input class="data" name="hive_name" placeholder='Улей' required/>
-                    </td>
-                    <td>
-                        <select class="data" name="nest_amount">
-                            <% for (let i = 1; i < 101; i++) { %>
-                                <option><%=i %></option>
-                            <% } %>                
-                        </select>
-                    </td>
-                    <td>
-                        <select class="data" name="store_amount">
-                            <% for (let i = 1; i < 101; i++) { %>
-                                <option><%=i %></option>
-                            <% } %>                
-                        </select>
-                    </td>
-                    <td>
-                        <input class="data" name="bee_nature" placeholder='Характер' required/>
-                    </td>
-                    <td>
-                        <select class="data" name="queen_age">
-                            <% for (let i = 0; i < 6; i++) { %>
-                                <option><%=i %> год(а)</option>
-                            <% } %>
-                        </select>
-                    </td>
-                </tr>
-        <%  } %>
+        <% apiary.forEach((hive) => { %>
+            <tr>
+                <td>
+                    <input class="data" name="hive_name" placeholder='Улей' value="<%= hive.hive_name %>" required/>
+                </td>
+                <td>
+                    <select class="data" name="nest_amount" value="<%= hive.nest_amount %>">
+                        <% for (let i = 1; i < 101; i++) { %>
+                            <option><%=i %></option>
+                        <% } %>                
+                    </select>
+                </td>
+                <td>
+                    <select class="data" name="store_amount" value="<%= hive.nest_amount %>">
+                        <% for (let i = 1; i < 101; i++) { %>
+                            <option><%=i %></option>
+                        <% } %>                
+                    </select>
+                </td>
+                <td>
+                    <input class="data" name="bee_nature" placeholder='Характер' value="<%= hive.bee_nature %>" required/>
+                </td>
+                <td>
+                    <select class="data" name="queen_age" value="<%= hive.queen_age %>">
+                        <% for (let i = 0; i < 6; i++) { %>
+                            <option><%=i %> год(а)</option>
+                        <% } %>
+                    </select>
+                </td>
+            </tr>
+        <% }) %>
     </tbody>
 </table>

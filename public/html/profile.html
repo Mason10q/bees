@@ -1,21 +1,38 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Р</title>
-        @@include("header_links.html")
-    </head>
+<html style="font-size: 16px;" lang="ru">
 
-    <body>
-        @@include("profile_header.html")
-        @@include("profile_dialogs.html")
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="/public/css/profile.css" media="screen">
+    @@include("header_links.html")
+</head>
 
-        <p>Личные данные</p>
+<body class="u-body u-overlap u-xl-mode">
+    @@include("profile_header.html")
+    @@include("profile_dialogs.html")
 
-        <%- include('../public/ejs/userData.ejs'); %>
+    <section class="u-clearfix u-section-1">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-border-5 u-border-custom-color-15 u-container-style u-custom-color-18 u-group u-group-1">
+                <div class="u-container-layout u-valign-top u-container-layout-1">
+                    <h2
+                        class="u-custom-font u-font-montserrat u-text u-text-custom-color-17 u-align-center u-text-default u-text-1">
+                        Личные данные</h2>
 
-        <a href="/profile/changePasswordPage">Изменить пароль</a>
-        <button onclick="window.exitDialog.showModal()">Выйти</button>
-        <button onclick="window.deleteDialog.showModal()">Удалить аккаунт</button>
-    </body>
+                    <%- include('../public/ejs/userData.ejs'); %>
+
+                    <a href="/profile/changePasswordPage"
+                        class="u-border-none u-btn u-button-style u-custom-color-14 u-radius-30 u-text-custom-color-17 u-btn-2">
+                        Изменить пароль</a>
+                    <a class="u-border-none u-btn u-button-style u-palette-5-dark-1 u-radius-30 u-text-custom-color-17 u-btn-3"
+                        onclick="window.exitDialog.showModal()">Выйти</a>
+                    <a class="u-border-none u-btn u-button-style u-palette-5-dark-1 u-radius-30 u-text-custom-color-17 u-btn-4"
+                        onclick="window.deleteDialog.showModal()">Удалить аккаунт</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
 </html>

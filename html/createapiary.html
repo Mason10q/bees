@@ -5,7 +5,6 @@
         <title>Р</title>
         <link rel="shortcut icon" href="/public/icons/favicon.png" type="image/png">
 <link rel="stylesheet" href="/public/css/headers.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/public/css/profile.css"> 
 <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
 <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
         
@@ -58,53 +57,8 @@
     </nav>
 </header>
         
-        <select id="hive_amount">
-            <%- include("../public/ejs/numberDropdown.ejs") %>              
-        </select>
-        
-        <input type="text" id="apiary_name" placeholder="Новая пасека" >
-        
-        <img id="apiary_image">        
-            <input id="image_input" type="file" accept="image/*">
-        </img>
-        
-        <table id="hive_table">        
-            <thead>
-                <tr>
-                    <td>Название</td>
-                    <td>Гнёзд</td>
-                    <td>Магазинов</td>
-                    <td>Характер</td>
-                    <td>Возраст матки</td>
-                </tr>
-            </thead>
-            <tbody id="hive_table_body">
-                <tr>
-                    <td>
-                        <input class="data" name="hive_name" placeholder='Улей'equired/>
-                    </td>
-                    <td>
-                        <select class="data" name="nest_amount">
-                            <%- include("../public/ejs/numberDropdown.ejs") %>              
-                        </select>
-                    </td>
-                    <td>
-                        <select class="data" name="store_amount">
-                            <%- include("../public/ejs/numberDropdown.ejs") %>              
-                        </select>
-                    </td>
-                    <td>
-                        <input class="data" name="bee_nature" placeholder='Характер' required/>
-                    </td>
-                    <td>
-                        <select class="data" name="queen_age">
-                            <%- include("../public/ejs/yearDropdown.ejs") %>              
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table> 
-
+        <%- include("../public/ejs/createApiary.ejs") %>              
+    
         <button id="save_btn">Сохранить</button>
 
         <script type="module" src="/public/js/createApiary.js"></script>

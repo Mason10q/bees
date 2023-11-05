@@ -6,6 +6,7 @@ const authController = require("../controllers/authController.js");
 const userController = require("../controllers/userController.js");
 
 profileRouter.get("/", userController.getProfile);
+profileRouter.post("/update", urlEncodedParser, userController.updateProfile);
 profileRouter.get("/apiary", userController.getApirie);
 
 profileRouter.get("/work/done", userController.getAllDoneWork);
@@ -35,7 +36,7 @@ profileRouter.delete("/apiary/hive/work/delete", userController.deleteWork);
 profileRouter.put("/apiary/hive/work/makeDone", userController.makeWorkDone);
 
 profileRouter.put("/apiary/avatar/update", userController.updateApiaryAvatar);
-profileRouter.put("/apiary/hive/avatar/update", userController.updateHiveAvatar);
+profileRouter.put("/apiary/hive/update", userController.updateHive);
 
 profileRouter.get("/apiary/redact", userController.getRedactApiaryPage);
 

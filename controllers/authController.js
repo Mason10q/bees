@@ -39,9 +39,18 @@ exports.signUp = (req, res) => {
     db.connect();
 
     hashPassword(password, (hash) => {
-        let query = "INSERT INTO Users SET?";
+        let signup_query = "INSERT INTO Users SET?";
+        let check_email_query = "SELECT * FROM Users WHERE email = ?"
 
-        db.query(query, {username: username, name: name, email: email, password: hash, location: location}, (err, rows, fields)=>{
+        db.query(check_email_query, [email], (err, rows, fields) => {
+            if(rows != undefined && rows.length != 0){
+                alert("Такая почта уже \n зарегестрирована");
+                res.redirect('back');
+            }
+        });
+
+        db.query(signup_query, {username: username, name: name, email: email, password: hash, location: location}, (err, rows, fields)=>{
+            console.log("register");
             res.redirect("/signinPage");
         });
         
@@ -66,6 +75,7 @@ exports.signIn = (req, res) => {
 
         if(rows === undefined || rows.length === 0){
             alert("Такая почта не \n зарегестрирована");
+            res.redirect("back");
             return;
         }
 
@@ -75,6 +85,7 @@ exports.signIn = (req, res) => {
                 res.redirect("/profile/apiary/");
             } else{
                 alert("Пароль неверный");
+                res.send();
                 return;
             }
         });
